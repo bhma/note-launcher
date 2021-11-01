@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MonthService } from 'src/app/service/month.service';
 
 @Component({
     selector: 'app-month-list',
@@ -8,8 +9,11 @@ import { Router } from '@angular/router';
 })
 export class MonthListComponent implements OnInit {
 
+    monthList: string[] = [];
+
     constructor(
-        private router: Router
+        private router: Router,
+        private monthService: MonthService
     ) { }
 
     ngOnInit(): void {

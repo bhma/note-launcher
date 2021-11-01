@@ -1,6 +1,10 @@
 import { NullTemplateVisitor } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { INote } from 'src/app/model/note.model';
+import { MonthService } from 'src/app/service/month.service';
+import { NoteService } from 'src/app/service/note.service';
+
 
 @Component({
     selector: 'app-note-list',
@@ -8,13 +12,16 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./note-list.component.scss']
 })
 export class NoteListComponent implements OnInit {
-    
+
+    notelist: INote[];
     isMonth: boolean = false;
     monthString: string = '';
     
 
     constructor(
-        private activeRoute: ActivatedRoute
+        private activeRoute: ActivatedRoute,
+        private noteService: NoteService,
+        private monthService: MonthService
     ) {
         
     }

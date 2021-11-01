@@ -2,28 +2,28 @@
     <div class="mb-3">
         <h1 class="display-4">Nova Escola</h1>
     </div>
-    <form>
+    <form [formGroup]="formSchool">
         <div class="form-group row">
             <label for="inputNameSchool" class="col-sm-2 col-form-label">Nome da Escola</label>
             <div class="col-sm-10">
-                <input id="inputNameSchool" type="text" class="form-control">
+                <input formControlName="schoolName" id="inputNameSchool" type="text" class="form-control">
             </div>
         </div>
         <div class="form-group row">
             <label for="inputDirectorName" class="col-sm-2 col-form-label">Diretor/a</label>
             <div class="col-sm-10">
-                <input id="inputDirectorName" type="text" class="form-control">
+                <input formControlName="directorName" id="inputDirectorName" type="text" class="form-control">
             </div>
         </div>
         <div class="form-group row mb-4">
             <label for="inputAddress" class="col-sm-2 col-form-label">Endereço</label>
             <div class="col-sm-10">
-                <input id="inputAddress" type="text" class="form-control">
+                <input formControlName="address" id="inputAddress" type="text" class="form-control">
             </div>
         </div>
         <div class="d-flex justify-content-around">
             <button class="btn btn-primary border-rounded">Adicionar Escola</button>
-            <button class="btn btn-secondary border-rounded">Cancelar</button>
+            <button [routerLink]="['/schools']" class="btn btn-secondary border-rounded">Cancelar</button>
         </div>
     </form>
 </section>
