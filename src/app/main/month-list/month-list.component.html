@@ -1,0 +1,19 @@
+<section class="container-fluid">
+    <div class="mb-3">
+        <h1 class="display-4">Lista de Meses</h1>
+    </div>
+    <div>
+        <ul class="list-inline">
+            <li class="list-inline-item mb-3">
+                <a (click)="navigate('10/2021')" class="card bg-light border-rounded month-w shadow-sm text-decoration-none text-dark pointer">
+                    <div class="card-body d-flex justify-content-end align-items-end">
+                        10/2021
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="d-flex justify-content-center">
+        <pagination [totalItems]="30" ></pagination>
+    </div>
+</section>
