@@ -11,7 +11,7 @@
         </div>
         <div>
             <button *ngIf="isMonth" class="btn btn-success mt-4 border-rounded">Exportar Excel</button>
-            <button *ngIf="!isMonth" [routerLink]="['/noteDetail']" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar nota </button>
+            <button *ngIf="!isMonth" [routerLink]="['/noteDetail', 'newNote']" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar nota </button>
         </div>
     </div>
     <div class="row px-3 mb-2">
