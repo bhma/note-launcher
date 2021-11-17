@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SchoolService } from 'src/app/service/school.service';
@@ -10,10 +11,12 @@ import { SchoolService } from 'src/app/service/school.service';
 export class SchoolDetailComponent implements OnInit {
 
     formSchool: FormGroup;
+    schoolId: string;
 
     constructor(
         private schoolService: SchoolService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private actRoute: ActivatedRoute
     ) { }
 
     ngOnInit(): void {
@@ -22,6 +25,21 @@ export class SchoolDetailComponent implements OnInit {
             directorName: [null],
             address: [null]
         });
+
+        this.actRoute.params.subscribe((params) => {
+            this.schoolId = params.id
+        });
+
+        if(this.schoolId !== 'newSchool'){
+            this.schoolService.getSchoolById(this.schoolId)
+            .subscribe((school) => {
+                this.formSchool.setValue({
+                    schoolName: school.SCHOOL_NAME,
+                    directorName: school.DIRECTOR_NAME,
+                    address: school.ADDRESS
+                });
+            });
+        }
     }
 
 }

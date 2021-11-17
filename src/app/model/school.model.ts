@@ -1,6 +1,7 @@
 export interface ISchool{
-    id: number;
-    schoolName: string;
-    directorName: string;
-    address: string;
+    SCHOOL_ID: number;
+    SCHOOL_NAME: string;
+    DIRECTOR_NAME: string;
+    ADDRESS: string;
+    IS_ACTIVE?: boolean;
 }

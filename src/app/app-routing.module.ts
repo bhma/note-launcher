@@ -11,9 +11,9 @@ const routes: Routes = [
     { path: 'noteListMonth', component: NoteListComponent },
     { path: 'months', component: MonthListComponent },
     { path: 'schools', component: SchoolListComponent },
-    { path: 'noteDetail', component: NoteDetailComponent },
-    { path: 'schoolDetail', component: SchoolDetailComponent },
-    
+    { path: 'noteDetail/:id', component: NoteDetailComponent },
+    { path: 'schoolDetail/:id', component: SchoolDetailComponent },
+
     { path: '', pathMatch: 'full', redirectTo: 'home' },
     { path: '*', pathMatch: 'full', redirectTo: 'home' }
 ];

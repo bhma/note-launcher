@@ -16,6 +16,10 @@ export class SchoolListComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
+        this.schoolService.getSchools()
+        .subscribe((schools) => {
+            this.schoolList = schools;
+        });
     }
 
 }

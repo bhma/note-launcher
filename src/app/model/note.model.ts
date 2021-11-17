@@ -1,7 +1,8 @@
 export interface INote{
-    id: number;
-    ocurrenceDate: Date;
-    value: number;
-    schoolId: number;
-    description: string;
+    NOTE_ID: number;
+    OCCURRENCE_DATE: Date;
+    OCCURRENCE_MONTH: Date;
+    VALUE: number;
+    SCHOOL_ID: number;
+    DESCRIPTION: string;
 }

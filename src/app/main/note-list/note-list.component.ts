@@ -13,17 +13,17 @@ import { NoteService } from 'src/app/service/note.service';
 })
 export class NoteListComponent implements OnInit {
 
-    notelist: INote[];
+    noteList: INote[];
     isMonth: boolean = false;
     monthString: string = '';
-    
+
 
     constructor(
         private activeRoute: ActivatedRoute,
         private noteService: NoteService,
         private monthService: MonthService
     ) {
-        
+
     }
 
     ngOnInit(): void {
@@ -34,6 +34,12 @@ export class NoteListComponent implements OnInit {
 
         if(this.isMonth){
             console.log(this.isMonth, this.monthString);
+        }else{
+            this.noteService.getNotes()
+            .subscribe(notes => {
+                this.noteList = notes;
+                console.log(this.noteList);
+            });
         }
     }
 

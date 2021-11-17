@@ -28,56 +28,16 @@
             <span class="column-title">Descrição</span>
         </div>
     </div>
-    <a href="#" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+    <a *ngFor="let note of noteList" [routerLink]="['/noteDetail', note.SCHOOL_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
         <div class="card-body row">
-            <div class="col column-data">23/10/2021</div>
-            <div class="col column-data">R$ 400,00</div>
-            <div class="col column-data text-truncate">Tito Pereira</div>
-            <div class="col column-data text-truncate">Carregamento de tinta</div>
-        </div>
-    </a>
-    <a href="#" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
-        <div class="card-body row">
-            <div class="col column-data">23/10/2021</div>
-            <div class="col column-data">R$ 400,00</div>
-            <div class="col column-data text-truncate">Tito Pereira</div>
-            <div class="col column-data text-truncate">Carregamento de tinta</div>
-        </div>
-    </a>
-    <a href="#" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
-        <div class="card-body row">
-            <div class="col column-data">23/10/2021</div>
-            <div class="col column-data">R$ 400,00</div>
-            <div class="col column-data text-truncate">Tito Pereira</div>
-            <div class="col column-data text-truncate">Carregamento de tinta</div>
-        </div>
-    </a>
-    <a href="#" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
-        <div class="card-body row">
-            <div class="col column-data">23/10/2021</div>
-            <div class="col column-data">R$ 400,00</div>
-            <div class="col column-data text-truncate">Tito Pereira</div>
-            <div class="col column-data text-truncate">Carregamento de tinta</div>
-        </div>
-    </a>
-    <a href="#" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
-        <div class="card-body row">
-            <div class="col column-data">23/10/2021</div>
-            <div class="col column-data">R$ 400,00</div>
-            <div class="col column-data text-truncate">Tito Pereira</div>
-            <div class="col column-data text-truncate">Carregamento de tinta</div>
-        </div>
-    </a>
-    <a href="#" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
-        <div class="card-body row">
-            <div class="col column-data">23/10/2021</div>
-            <div class="col column-data">R$ 400,00</div>
-            <div class="col column-data text-truncate">Tito Pereira</div>
-            <div class="col column-data text-truncate">Carregamento de tinta</div>
+            <div class="col column-data">{{ note.OCCURRENCE_DATE }}</div>
+            <div class="col column-data">R$ {{ note.VALUE }}</div>
+            <div class="col column-data text-truncate">{{ note.SCHOOL_ID }}</div>
+            <div class="col column-data text-truncate">{{ note.DESCRIPTION }}</div>
         </div>
     </a>
     <div class="d-flex justify-content-center">
         <pagination [totalItems]="30" ></pagination>
     </div>
-    
+
 </section>
