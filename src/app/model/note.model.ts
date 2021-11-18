@@ -5,4 +5,5 @@ export interface INote{
     VALUE: number;
     SCHOOL_ID: number;
     DESCRIPTION: string;
+    IS_ACTIVE?: boolean;
 }

@@ -23,8 +23,4 @@ export class SchoolService {
         .pipe(take(1));
     }
 
-    getPokemon(){
-        return this.http.get(`${this.API}`);
-    }
-
 }

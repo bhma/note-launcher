@@ -32,14 +32,13 @@ export class NoteListComponent implements OnInit {
             this.monthString = queryParams.monthString;
         });
 
-        if(this.isMonth){
+        if (this.isMonth) {
             console.log(this.isMonth, this.monthString);
-        }else{
+        } else {
             this.noteService.getNotes()
-            .subscribe(notes => {
-                this.noteList = notes;
-                console.log(this.noteList);
-            });
+                .subscribe(notes => {
+                    this.noteList = notes;
+                });
         }
     }
 

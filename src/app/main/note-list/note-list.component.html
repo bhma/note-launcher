@@ -28,10 +28,10 @@
             <span class="column-title">Descrição</span>
         </div>
     </div>
-    <a *ngFor="let note of noteList" [routerLink]="['/noteDetail', note.SCHOOL_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+    <a *ngFor="let note of noteList" [routerLink]="['/noteDetail', note.NOTE_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
         <div class="card-body row">
-            <div class="col column-data">{{ note.OCCURRENCE_DATE }}</div>
-            <div class="col column-data">R$ {{ note.VALUE }}</div>
+            <div class="col column-data">{{ note.OCCURRENCE_DATE | date: 'dd/MM/yyyy' }}</div>
+            <div class="col column-data">{{ note.VALUE | currency: 'BRL' }}</div>
             <div class="col column-data text-truncate">{{ note.SCHOOL_ID }}</div>
             <div class="col column-data text-truncate">{{ note.DESCRIPTION }}</div>
         </div>
