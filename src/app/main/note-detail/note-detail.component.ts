@@ -30,7 +30,8 @@ export class NoteDetailComponent implements OnInit {
             ocurrenceDate: [null],
             value: [null],
             schoolId: [null],
-            description: [null]
+            description: [null],
+            isActive: [false]
         });
 
         this.schoolService.getSchools()
@@ -49,14 +50,36 @@ export class NoteDetailComponent implements OnInit {
                         ocurrenceDate: note.OCCURRENCE_DATE,
                         value: note.VALUE,
                         schoolId: note.SCHOOL_ID,
-                        description: note.DESCRIPTION
+                        description: note.DESCRIPTION,
+                        isActive: note.IS_ACTIVE
                     });
                 })
         }
     }
 
-    createNote(){
-        
+    createUpdateNote(option: string){
+        const note: INote = {
+            NOTE_ID: 0,
+            OCCURRENCE_DATE: this.formNote.get('ocurrenceDate').value,
+            OCCURRENCE_MONTH: String(this.formNote.get('ocurrenceDate').value).substr(0,7),
+            VALUE: this.formNote.get('value').value,
+            SCHOOL_ID: this.formNote.get('schoolId').value,
+            DESCRIPTION: this.formNote.get('description').value,
+            IS_ACTIVE: this.formNote.get('isActive').value
+        };
+
+        if(option === 'create'){
+            this.noteService.createNote(note)
+            .subscribe(res => {
+                console.log(res);
+            });
+        }else if(option === 'update'){
+            note.NOTE_ID = Number(this.noteId);
+            this.noteService.updateNote(note)
+            .subscribe(res => {
+                console.log(res);
+            });
+        }
     }
 
 }

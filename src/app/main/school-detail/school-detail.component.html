@@ -22,9 +22,16 @@
                 <input formControlName="address" placeholder="Endereço da escola" id="inputAddress" type="text" class="form-control">
             </div>
         </div>
+        <div class="form-group row mb-4">
+            <label for="inputIsActive" class="col-sm-2 col-form-label">Ativo</label>
+            <div class="col-sm-1">
+                <input formControlName="isActive" type="checkbox" id="inputIsActive" class="form-control">
+            </div>
+        </div>
+
         <div class="d-flex justify-content-around">
-            <button *ngIf="schoolId === 'newSchool'" class="btn btn-primary border-rounded">Adicionar Escola</button>
-            <button *ngIf="schoolId !== 'newSchool'" class="btn btn-primary border-rounded">Salvar Escola</button>
+            <button *ngIf="schoolId === 'newSchool'" (click)="createUpdateSchool('create')" class="btn btn-primary border-rounded">Adicionar Escola</button>
+            <button *ngIf="schoolId !== 'newSchool'" (click)="createUpdateSchool('update')" class="btn btn-primary border-rounded">Salvar Escola</button>
             <button [routerLink]="['/schools']" class="btn btn-secondary border-rounded">Cancelar</button>
         </div>
     </form>

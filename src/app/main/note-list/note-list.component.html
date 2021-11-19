@@ -4,10 +4,10 @@
             <h1 class="display-4">Lista de Notas</h1>
         </div>
         <div *ngIf="isMonth">
-            <h1 class="display-4"> {{ monthString }} </h1>
+            <h1 class="display-4"> {{ monthString | date: 'MM/yyyy' }} </h1>
         </div>
         <div *ngIf="isMonth">
-            <h3 class="mt-4">R$ 456,00</h3>
+            <h3 class="mt-4">{{ sumValues | currency: 'BRL' }}</h3>
         </div>
         <div>
             <button *ngIf="isMonth" class="btn btn-success mt-4 border-rounded">Exportar Excel</button>
@@ -32,7 +32,7 @@
         <div class="card-body row">
             <div class="col column-data">{{ note.OCCURRENCE_DATE | date: 'dd/MM/yyyy' }}</div>
             <div class="col column-data">{{ note.VALUE | currency: 'BRL' }}</div>
-            <div class="col column-data text-truncate">{{ note.SCHOOL_ID }}</div>
+            <div class="col column-data text-truncate">{{ getSchoolName(note.SCHOOL_ID) }}</div>
             <div class="col column-data text-truncate">{{ note.DESCRIPTION }}</div>
         </div>
     </a>

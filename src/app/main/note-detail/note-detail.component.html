@@ -32,9 +32,15 @@
                 <small class="text-muted">Limite de 150 caracteres.</small>
             </div>
         </div>
+        <div class="form-group row mb-4">
+            <label for="inputIsActive" class="col-sm-2 col-form-label">Ativo</label>
+            <div class="col-sm-1">
+                <input formControlName="isActive" type="checkbox" id="inputIsActive" class="form-control">
+            </div>
+        </div>
         <div class="d-flex justify-content-around">
-            <button *ngIf="noteId === 'newNote'" class="btn btn-primary border-rounded">Adicionar Nota</button>
-            <button *ngIf="noteId !== 'newNote'" class="btn btn-primary border-rounded">Salvar Nota</button>
+            <button *ngIf="noteId === 'newNote'" (click)="createUpdateNote('create')" class="btn btn-primary border-rounded">Adicionar Nota</button>
+            <button *ngIf="noteId !== 'newNote'" (click)="createUpdateNote('update')" class="btn btn-primary border-rounded">Salvar Nota</button>
             <button [routerLink]="['/home']" class="btn btn-secondary border-rounded">Cancelar</button>
         </div>
     </form>

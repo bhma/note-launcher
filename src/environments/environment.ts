@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://api-note-launcher.herokuapp.com/api'
+//   API_URL: 'https://api-note-launcher.herokuapp.com/api'
+  API_URL: '/api'
 };
 
 /*

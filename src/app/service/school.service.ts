@@ -23,4 +23,14 @@ export class SchoolService {
         .pipe(take(1));
     }
 
+    createSchool(school: ISchool){
+        return this.http.post<ISchool>(`${this.API}/createSchool`, school)
+        .pipe(take(1));
+    }
+
+    updateSchool(school: ISchool){
+        return this.http.put<ISchool>(`${this.API}/updateSchool`, school)
+        .pipe(take(1));
+    }
+
 }

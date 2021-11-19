@@ -4,10 +4,10 @@
     </div>
     <div>
         <ul class="list-inline">
-            <li class="list-inline-item mb-3">
-                <a (click)="navigate('10/2021')" class="card bg-light border-rounded month-w shadow-sm text-decoration-none text-dark pointer">
+            <li *ngFor="let month of monthList" class="list-inline-item mb-3">
+                <a (click)="navigate(month.OCCURRENCE_MONTH)" class="card bg-light border-rounded month-w shadow-sm text-decoration-none text-dark pointer">
                     <div class="card-body d-flex justify-content-end align-items-end">
-                        10/2021
+                        {{ month.OCCURRENCE_MONTH }}
                     </div>
                 </a>
             </li>
