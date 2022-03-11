@@ -1,4 +1,3 @@
-import { NullTemplateVisitor } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { INote } from 'src/app/model/note.model';
@@ -60,6 +59,10 @@ export class NoteListComponent implements OnInit {
     getSchoolName(schoolId: number) {
         return this.schoolList
             .find(school => school.SCHOOL_ID === schoolId).SCHOOL_NAME;
+    }
+
+    exportToExcel(){
+        // this.noteService.exportNotesToExcel(this.noteList);
     }
 
 }

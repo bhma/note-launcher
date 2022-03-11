@@ -1,38 +1,108 @@
-<section class="container">
-    <div class="mb-3">
-        <h1 *ngIf="schoolId === 'newSchool'" class="display-4">Nova Escola</h1>
-        <h1 *ngIf="schoolId !== 'newSchool'" class="display-4">Escola #{{ schoolId }}</h1>
-    </div>
-    <form [formGroup]="formSchool">
-        <div class="form-group row">
-            <label for="inputNameSchool" class="col-sm-2 col-form-label">Nome da Escola</label>
-            <div class="col-sm-10">
-                <input formControlName="schoolName" placeholder="Nome da escola" id="inputNameSchool" type="text" class="form-control">
+<section class="container-fluid">
+    <div class="row vh-80">
+        <div class="col">
+            <div class="mb-3">
+                <h1 *ngIf="schoolId === 'newSchool'" class="display-4">Nova Escola</h1>
+                <h1 *ngIf="schoolId !== 'newSchool'" class="display-4">Escola #{{ schoolId }}</h1>
             </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputDirectorName" class="col-sm-2 col-form-label">Diretor/a</label>
-            <div class="col-sm-10">
-                <input formControlName="directorName" placeholder="Nome do Diretor" id="inputDirectorName" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="form-group row mb-4">
-            <label for="inputAddress" class="col-sm-2 col-form-label">Endereço</label>
-            <div class="col-sm-10">
-                <input formControlName="address" placeholder="Endereço da escola" id="inputAddress" type="text" class="form-control">
-            </div>
-        </div>
-        <div class="form-group row mb-4">
-            <label for="inputIsActive" class="col-sm-2 col-form-label">Ativo</label>
-            <div class="col-sm-1">
-                <input formControlName="isActive" type="checkbox" id="inputIsActive" class="form-control">
-            </div>
-        </div>
+            <form [formGroup]="formSchool">
+                <div class="form-group row">
+                    <label for="inputNameSchool" class="col-sm-2 col-form-label">Nome da Escola</label>
+                    <div class="col-sm-10">
+                        <input formControlName="schoolName" placeholder="Nome da escola" id="inputNameSchool"
+                            type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputDirectorName" class="col-sm-2 col-form-label">Diretor/a</label>
+                    <div class="col-sm-10">
+                        <input formControlName="directorName" placeholder="Nome do Diretor" id="inputDirectorName"
+                            type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row mb-4">
+                    <label for="inputAddress" class="col-sm-2 col-form-label">Endereço</label>
+                    <div class="col-sm-10">
+                        <input formControlName="address" placeholder="Endereço da escola" id="inputAddress" type="text"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row mb-4">
+                    <label for="inputIsActive" class="col-sm-2 col-form-label">Ativo</label>
+                    <div class="col-sm-1">
+                        <input formControlName="isActive" type="checkbox" id="inputIsActive" class="form-control">
+                    </div>
+                </div>
 
-        <div class="d-flex justify-content-around">
-            <button *ngIf="schoolId === 'newSchool'" (click)="createUpdateSchool('create')" class="btn btn-primary border-rounded">Adicionar Escola</button>
-            <button *ngIf="schoolId !== 'newSchool'" (click)="createUpdateSchool('update')" class="btn btn-primary border-rounded">Salvar Escola</button>
-            <button [routerLink]="['/schools']" class="btn btn-secondary border-rounded">Cancelar</button>
+                <div class="d-flex justify-content-around">
+                    <button *ngIf="schoolId === 'newSchool'" (click)="createUpdateSchool('create')"
+                        class="btn btn-primary border-rounded">Adicionar Escola</button>
+                    <button *ngIf="schoolId !== 'newSchool'" (click)="createUpdateSchool('update')"
+                        class="btn btn-primary border-rounded">Salvar Escola</button>
+                    <button [routerLink]="['/schools']" class="btn btn-secondary border-rounded">Cancelar</button>
+                </div>
+            </form>
         </div>
-    </form>
+        <div class="col">
+            <div *ngIf="schoolId !== 'newSchool'" >
+                <div class="row">
+                    <h2 class="col-sm font-weight-light">Adicionar notas</h2>
+                    <div class="col-sm d-flex align-items-center">
+                        <button class="btn btn-sm btn-primary border-rounded ml-5">
+                            Salvar notas
+                        </button>
+                    </div>
+                </div>
+
+                <form [formGroup]="formNote" class="form-inline">
+                    <input formControlName="ocurrenceDate" type="date" class="form-control mb-2 mr-sm-2 form-control-sm" id="inputDate"
+                        placeholder="Fulano">
+
+                    <input formControlName="value" currencyMask placeholder="R$ 0,00" id="inputCost"
+                        class="form-control mb-2 mr-sm-2 form-control-sm">
+
+                    <textarea formControlName="description" id="inputDesc" placeholder="Digite uma descrição..."
+                        maxlength="150" rows="1" class="form-control mb-2 mr-sm-2 form-control-sm"></textarea>
+
+                    <div class="form-check mb-2 mr-sm-2">
+                        <input formControlName="isActive" type="checkbox" id="inputIsActive"
+                            class="form-control mr-sm-2 form-control-sm">
+                        <label class="form-check-label" for="inputIsActive">
+                            Ativa
+                        </label>
+                    </div>
+
+                    <button class="btn btn-primary border-rounded mb-2" (click)="addNoteList()"><strong>&#43;</strong></button>
+                </form>
+
+                <div *ngIf="showNoteList()" class="text-muted text-center">
+                    <small>Lista de notas vazia.</small>
+                </div>
+
+                <div *ngIf="!showNoteList()" >
+                    <div *ngFor="let note of returnedNoteList" class="card bg-light border-rounded text-dark shadow-sm mb-3 w-75">
+                        <div class="car-body row align-items-center py-1">
+                            <div class="col-sm-4 column-data pl-5"> {{ note.OCCURRENCE_DATE | date: 'dd/MM/yyyy'  }} </div>
+                            <div class="col-sm-3 column-data "> {{ note.VALUE | currency: 'BRL'  }} </div>
+                            <!-- <div class="col-sm-2 column-data"> {{ getSchoolName() }} </div> -->
+                            <div class="col-sm-4 column-data text-truncate"> {{ note.DESCRIPTION }} </div>
+                            <div class="col-sm-1 column-data">
+                                <button class="btn btn-sm btn-danger border-rounded ml-5" (click)="rmNoteList(note)">
+                                    <strong>&#8722;</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <pagination [totalItems]="noteList.length" [itemsPerPage]="PAGELENGTH"  (pageChanged)="pageChanged($event)" ></pagination>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
 </section>

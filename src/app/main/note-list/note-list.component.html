@@ -10,7 +10,7 @@
             <h3 class="mt-4">{{ sumValues | currency: 'BRL' }}</h3>
         </div>
         <div>
-            <button *ngIf="isMonth" class="btn btn-success mt-4 border-rounded">Exportar Excel</button>
+            <button *ngIf="isMonth" (click)="exportToExcel()" class="btn btn-success mt-4 border-rounded">Exportar Excel</button>
             <button *ngIf="!isMonth" [routerLink]="['/noteDetail', 'newNote']" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar nota </button>
         </div>
     </div>

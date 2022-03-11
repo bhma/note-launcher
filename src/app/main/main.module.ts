@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { NgxPaginationModule } from 'ngx-pagination'
 import { CommonModule } from '@angular/common';
 import { NoteListComponent } from './note-list/note-list.component';
 import { SchoolListComponent } from './school-list/school-list.component';
@@ -36,7 +37,8 @@ export const customCurrencyMaskConfig = {
     AppRoutingModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     PaginationModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   exports:[
       NoteListComponent,
