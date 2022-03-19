@@ -18,7 +18,7 @@
             <span class="column-title">Endereço</span>
         </div>
     </div>
-    <a *ngFor="let school of schoolList" [routerLink]="['/schoolDetail', school.SCHOOL_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+    <a *ngFor="let school of returnedSchoolList" [routerLink]="['/schoolDetail', school.SCHOOL_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
         <div class="card-body row">
             <div class="col column-data">{{ school.SCHOOL_NAME }}</div>
             <div class="col column-data">{{ school.DIRECTOR_NAME }}</div>
@@ -27,6 +27,6 @@
     </a>
 
     <div class="d-flex justify-content-center">
-        <pagination [totalItems]="30" ></pagination>
+        <pagination [totalItems]="schoolList.length" [itemsPerPage]="PAGELENGTH" [rotate]="true" [maxSize]="MAXSIZE" (pageChanged)="pageChanged($event)" ></pagination>
     </div>
 </section>

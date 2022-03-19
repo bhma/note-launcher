@@ -10,7 +10,8 @@
             <h3 class="mt-4">{{ sumValues | currency: 'BRL' }}</h3>
         </div>
         <div>
-            <button *ngIf="isMonth" (click)="exportToExcel()" class="btn btn-success mt-4 border-rounded">Exportar Excel</button>
+            <button *ngIf="isMonth" (click)="exportToExcel()" class="btn btn-success mt-4 mr-3 border-rounded">Exportar Excel</button>
+            <button *ngIf="isMonth" [routerLink]="['/months']" class="btn btn-secondary mt-4 border-rounded">Voltar</button>
             <button *ngIf="!isMonth" [routerLink]="['/noteDetail', 'newNote']" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar nota </button>
         </div>
     </div>
@@ -28,7 +29,7 @@
             <span class="column-title">Descrição</span>
         </div>
     </div>
-    <a *ngFor="let note of noteList" [routerLink]="['/noteDetail', note.NOTE_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+    <a *ngFor="let note of returnedNoteList" [routerLink]="['/noteDetail', note.NOTE_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
         <div class="card-body row">
             <div class="col column-data">{{ note.OCCURRENCE_DATE | date: 'dd/MM/yyyy' }}</div>
             <div class="col column-data">{{ note.VALUE | currency: 'BRL' }}</div>
@@ -37,7 +38,7 @@
         </div>
     </a>
     <div class="d-flex justify-content-center">
-        <pagination [totalItems]="30" ></pagination>
+        <pagination [totalItems]="noteList.length" [itemsPerPage]="PAGELENGTH" [rotate]="true" [maxSize]="5" (pageChanged)="pageChanged($event)" ></pagination>
     </div>
 
 </section>

@@ -1,3 +1,4 @@
+import { NoteService } from './../../service/note.service';
 import { INote } from './../../model/note.model';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -14,6 +15,7 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 export class SchoolDetailComponent implements OnInit {
 
     PAGELENGTH: number = 8;
+    MAXSIZE: number = 5;
     currentPage: number = 1;
 
     formSchool: FormGroup;
@@ -27,6 +29,7 @@ export class SchoolDetailComponent implements OnInit {
 
     constructor(
         private schoolService: SchoolService,
+        private noteService: NoteService,
         private formBuilder: FormBuilder,
         private actRoute: ActivatedRoute
     ) { }
@@ -98,7 +101,7 @@ export class SchoolDetailComponent implements OnInit {
             IS_ACTIVE : this.formNote.get('isActive').value
         });
         if(this.noteList.length <= this.PAGELENGTH){
-            this.returnedNoteList = this.noteList;
+            this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
         }else{
 
             let ceilValidation = Math.ceil(this.noteList.length / this.PAGELENGTH);
@@ -115,13 +118,6 @@ export class SchoolDetailComponent implements OnInit {
     rmNoteList(note: INote){
         let position = this.noteList.indexOf(note);
         this.noteList.splice(position, 1);
-
-        // position = this.returnedNoteList.indexOf(note);
-        // this.returnedNoteList.splice(position, 1);
-
-        // if(this.returnedNoteList.length === 0 && this.noteList.length >= this.PAGELENGTH){
-        //     this.returnedNoteList = this.noteList.slice(this.noteList.length - this.PAGELENGTH);
-        // }
     }
 
     getSchoolName(){
@@ -144,6 +140,16 @@ export class SchoolDetailComponent implements OnInit {
         const startItem = (event.page - 1) * event.itemsPerPage;
         const endItem = event.page * event.itemsPerPage;
         this.returnedNoteList = this.noteList.slice(startItem, endItem);
+    }
+
+    saveNotes(){
+        console.log(this.noteList);
+        this.noteService.createManyNotes(this.noteList)
+        .subscribe(res => {
+            console.log(res);
+        });
+        this.noteList = [];
+        this.formNote.reset();
     }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { IMonth } from 'src/app/model/month.model';
 import { MonthService } from 'src/app/service/month.service';
 
@@ -10,7 +11,10 @@ import { MonthService } from 'src/app/service/month.service';
 })
 export class MonthListComponent implements OnInit {
 
-    monthList: IMonth[];
+    PAGELENGTH: number = 12;
+    MAXSIZE: number = 5;
+    monthList: Array<IMonth> = new Array<IMonth>();
+    returnedMonthList: Array<IMonth> = new Array<IMonth>();
 
     constructor(
         private router: Router,
@@ -21,6 +25,7 @@ export class MonthListComponent implements OnInit {
         this.monthService.getMonths()
         .subscribe(months => {
             this.monthList = months;
+            this.returnedMonthList = this.monthList.slice(0, this.PAGELENGTH);
         });
     }
 
@@ -29,6 +34,12 @@ export class MonthListComponent implements OnInit {
             'isMonth': true,
             'monthString': month
         }});
+    }
+
+    pageChanged(event: PageChangedEvent){
+        const startItem = (event.page - 1) * event.itemsPerPage;
+        const endItem = event.page * event.itemsPerPage;
+        this.returnedMonthList = this.monthList.slice(startItem, endItem);
     }
 
 }

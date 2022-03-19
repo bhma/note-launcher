@@ -34,6 +34,11 @@ export class NoteService {
         .pipe(take(1));
     }
 
+    createManyNotes(notes: INote[]){
+        return this.http.post<INote>(`${this.API}/createManyNotes`, notes)
+        .pipe(take(1));
+    }
+
     updateNote(note: INote){
         return this.http.put<INote>(`${this.API}/updateNote`, note)
         .pipe(take(1));

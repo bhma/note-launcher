@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { INote } from 'src/app/model/note.model';
 import { ISchool } from 'src/app/model/school.model';
 import { MonthService } from 'src/app/service/month.service';
@@ -14,7 +15,11 @@ import { SchoolService } from 'src/app/service/school.service';
 })
 export class NoteListComponent implements OnInit {
 
-    noteList: INote[];
+    PAGELENGTH: number = 6;
+    MAXSIZE: number = 5;
+
+    noteList: Array<INote> = new Array<INote>();;
+    returnedNoteList: Array<INote> = new Array<INote>();;
     schoolList: ISchool[];
     isMonth: boolean = false;
     monthString: string = '';
@@ -46,14 +51,18 @@ export class NoteListComponent implements OnInit {
             this.noteService.getNoteByMonth(this.monthString)
             .subscribe(monthDetail => {
                 this.noteList = monthDetail.notes;
+                this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
                 this.sumValues = Number(monthDetail.sumValues.SumValues);
             });
         } else {
             this.noteService.getNotes()
             .subscribe(notes => {
                 this.noteList = notes;
+                this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
             });
         }
+
+
     }
 
     getSchoolName(schoolId: number) {
@@ -63,6 +72,12 @@ export class NoteListComponent implements OnInit {
 
     exportToExcel(){
         // this.noteService.exportNotesToExcel(this.noteList);
+    }
+
+    pageChanged(event: PageChangedEvent){
+        const startItem = (event.page - 1) * event.itemsPerPage;
+        const endItem = event.page * event.itemsPerPage;
+        this.returnedNoteList = this.noteList.slice(startItem, endItem);
     }
 
 }
