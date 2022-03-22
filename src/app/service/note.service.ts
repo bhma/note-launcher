@@ -19,14 +19,23 @@ export class NoteService {
         .pipe(take(1));
     }
 
+    getNotesBySchoolId(month: string, schoolId: number){
+        return this.getNoteByMonth(month, schoolId);
+    }
+
     getNoteByID(noteId: string){
         return this.http.get<INote>(`${this.API}/note/${noteId}`)
         .pipe(take(1));
     }
 
-    getNoteByMonth(month: string){
-        return this.http.get<any>(`${this.API}/notes/${month}`)
-        .pipe(take(1));
+    getNoteByMonth(month: string, schoolId?: number){
+        if(schoolId){
+            return this.http.get<any>(`${this.API}/notes/${month}/${schoolId}`)
+            .pipe(take(1));
+        }else{
+            return this.http.get<any>(`${this.API}/notes/${month}`)
+            .pipe(take(1));
+        }
     }
 
     createNote(note: INote){

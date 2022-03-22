@@ -31,7 +31,6 @@ export class MonthListComponent implements OnInit {
 
     navigate(month: string) {
         this.router.navigate(['/noteListMonth'], {queryParams: {
-            'isMonth': true,
             'monthString': month
         }});
     }

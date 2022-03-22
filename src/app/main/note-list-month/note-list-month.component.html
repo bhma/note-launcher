@@ -1,0 +1,78 @@
+<section class="container-fluid">
+    <div class="row ">
+        <div class="col-sm-4">
+            <h1 class="display-4"> {{ monthString | date: 'MM/yyyy' }} </h1>
+        </div>
+        <div class="col-sm-4 d-flex align-items-center">
+            <form>
+                <div class="row">
+                    <label for="selectSchool" class="col-sm-4">Escola: </label>
+                    <div class="col-sm">
+                        <select id="selectSchool" class="form-control form-control-sm" (change)="onChange($event)">
+                            <option value="0">Escolha uma Escola...</option>
+                            <option *ngFor="let school of schoolList" [value]="school.SCHOOL_ID">{{ school.SCHOOL_NAME
+                                }}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-4 d-flex align-items-center justify-content-center">
+            <button (click)="exportToExcel()" class="btn btn-success mr-3 border-rounded">Exportar Excel</button>
+            <button [routerLink]="['/months']" class="btn btn-secondary border-rounded">Voltar</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row px-3 mb-2">
+                <div class="col">
+                    <span class="column-title">Data</span>
+                </div>
+                <div class="col">
+                    <span class="column-title">Valor</span>
+                </div>
+                <div class="col">
+                    <span class="column-title">Escola</span>
+                </div>
+                <div class="col">
+                    <span class="column-title">Descrição</span>
+                </div>
+            </div>
+            <a *ngFor="let note of returnedNoteList" [routerLink]="['/noteDetail', note.NOTE_ID]"
+                class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+                <div class="card-body row">
+                    <div class="col column-data">{{ note.OCCURRENCE_DATE | date: 'dd/MM/yyyy' }}</div>
+                    <div class="col column-data">{{ note.VALUE | currency: 'BRL' }}</div>
+                    <div class="col column-data text-truncate">{{ getSchoolName(note.SCHOOL_ID) }}</div>
+                    <div class="col column-data text-truncate">{{ note.DESCRIPTION }}</div>
+                </div>
+            </a>
+            <div class="d-flex justify-content-center">
+                <pagination [totalItems]="noteList.length" [itemsPerPage]="PAGELENGTH" [rotate]="true" [maxSize]="5"
+                    (pageChanged)="pageChanged($event)"></pagination>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="mt-5">
+                <div>
+                    <h5>Gastos no mês: </h5>
+                </div>
+                <div class="">
+                    <span class="">{{ sumValues | currency: 'BRL' }}</span>
+                </div>
+            </div>
+            <div class="mt-3">
+                <div>
+                    <h5>Gastos por Escola: </h5>
+                </div>
+                <div class="">
+                    <span class="">{{ sumValuesSchool | currency: 'BRL' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

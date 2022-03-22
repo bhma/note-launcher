@@ -10,6 +10,7 @@ import { NoteDetailComponent } from './note-detail/note-detail.component';
 import { SchoolDetailComponent } from './school-detail/school-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NoteListMonthComponent } from './note-list-month/note-list-month.component';
 
 export const customCurrencyMaskConfig = {
     align: "left",
@@ -30,7 +31,8 @@ export const customCurrencyMaskConfig = {
     SchoolListComponent,
     MonthListComponent,
     NoteDetailComponent,
-    SchoolDetailComponent
+    SchoolDetailComponent,
+    NoteListMonthComponent
   ],
   imports: [
     CommonModule,
