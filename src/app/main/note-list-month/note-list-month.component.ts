@@ -5,7 +5,6 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ActivatedRoute } from '@angular/router';
 import { NoteService } from 'src/app/service/note.service';
 import { SchoolService } from 'src/app/service/school.service';
-import * as EventEmitter from 'events';
 
 @Component({
     selector: 'app-note-list-month',
@@ -23,7 +22,7 @@ export class NoteListMonthComponent implements OnInit {
     isMonth: boolean = false;
     monthString: string = '';
     sumValues: number;
-    sumValuesSchool: number;
+    sumValuesSchool: number = 0;
 
     constructor(
         private activeRoute: ActivatedRoute,
@@ -55,7 +54,20 @@ export class NoteListMonthComponent implements OnInit {
     }
 
     exportToExcel(){
-        // this.noteService.exportNotesToExcel(this.noteList);
+        this.noteService.exportNotesToExcel()
+        .subscribe((res: Blob) => {
+            const file = new Blob([res], {
+                type: res.type
+            });
+            const blob = window.URL.createObjectURL(file);
+            const link = document.createElement('a');
+            link.href = blob;
+            const now = new Date;
+            link.download = `ListaNotas_${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}.xlsx`;
+            link.click();
+            window.URL.revokeObjectURL(blob);
+            link.remove();
+        });
     }
 
     pageChanged(event: PageChangedEvent){
@@ -65,11 +77,12 @@ export class NoteListMonthComponent implements OnInit {
     }
 
     onChange(event){
-        this.noteService.getNotesBySchoolId(this.monthString, event.target.value)
+        let schoolId: number = Number(event.target.value);
+        this.noteService.getNotesBySchoolId(this.monthString, schoolId)
         .subscribe(noteList => {
             this.noteList = noteList.notes;
             this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
-            if(event.target.value === 0){
+            if(schoolId === 0){
                 this.sumValuesSchool = 0;
             }else{
                 this.sumValuesSchool = Number(noteList.sumValues.SumValues);

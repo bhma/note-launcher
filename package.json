@@ -25,7 +25,6 @@
     "ngx-pagination": "^5.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
-    "xlsx": "^0.17.4",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

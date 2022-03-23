@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
 import { INote } from '../model/note.model';
-// import * as XLSX from 'xlsx';
 
 @Injectable({
     providedIn: 'root'
@@ -53,10 +52,11 @@ export class NoteService {
         .pipe(take(1));
     }
 
-    // exportNotesToExcel(notes: INote[]){
-    //     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(notes);
-    //     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    //     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    //     XLSX.writeFile(wb, 'Notas.xlsx');
-    // }
+    exportNotesToExcel(notes?: INote[]){
+        return this.http.get(`${this.API}/exportExcel`,
+        {
+            responseType: 'blob' as 'json'
+        })
+        .pipe(take(1));
+    }
 }
