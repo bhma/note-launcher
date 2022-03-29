@@ -6,6 +6,7 @@ import { ISchool } from 'src/app/model/school.model';
 import { NoteService } from 'src/app/service/note.service';
 import { SchoolService } from 'src/app/service/school.service';
 import pt from '@angular/common/locales/pt-PT'
+import { AlertService, LIFETIMENOTIFY, STRDANGER, STRSUCCESS } from 'src/app/service/alert.service';
 
 @Component({
     selector: 'app-note-detail',
@@ -22,7 +23,8 @@ export class NoteDetailComponent implements OnInit {
         private noteService: NoteService,
         private formBuilder: FormBuilder,
         private actRoute: ActivatedRoute,
-        private schoolService: SchoolService
+        private schoolService: SchoolService,
+        private alertServ: AlertService
     ) { }
 
     ngOnInit(): void {
@@ -72,14 +74,32 @@ export class NoteDetailComponent implements OnInit {
             this.noteService.createNote(note)
             .subscribe(res => {
                 console.log(res);
+                if(res){
+                    this.notify('Nota cadastrada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                }else{
+                    this.notify('Houve um problema ao cadastrar a nota.', LIFETIMENOTIFY, STRDANGER);
+                }
             });
         }else if(option === 'update'){
             note.NOTE_ID = Number(this.noteId);
             this.noteService.updateNote(note)
             .subscribe(res => {
                 console.log(res);
+                if(res){
+                    this.notify('Nota atualizada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                }else{
+                    this.notify('Houve um problema ao atualizar a nota.', LIFETIMENOTIFY, STRDANGER);
+                }
             });
         }
+    }
+
+    notify(msg: string, tempoVida: number, color: string){
+        this.alertServ.newAlert(msg, tempoVida, color);
+    }
+
+    removeNotify(){
+        this.alertServ.removeAllAlerts();
     }
 
 }

@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SchoolService } from 'src/app/service/school.service';
 import { ISchool } from 'src/app/model/school.model';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { AlertService, LIFETIMENOTIFY, STRDANGER, STRSUCCESS } from 'src/app/service/alert.service';
 
 @Component({
     selector: 'app-school-detail',
@@ -13,6 +14,7 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
     styleUrls: ['./school-detail.component.scss']
 })
 export class SchoolDetailComponent implements OnInit {
+
 
     PAGELENGTH: number = 8;
     MAXSIZE: number = 5;
@@ -31,7 +33,8 @@ export class SchoolDetailComponent implements OnInit {
         private schoolService: SchoolService,
         private noteService: NoteService,
         private formBuilder: FormBuilder,
-        private actRoute: ActivatedRoute
+        private actRoute: ActivatedRoute,
+        private alertServ: AlertService
     ) { }
 
     ngOnInit(): void {
@@ -45,8 +48,7 @@ export class SchoolDetailComponent implements OnInit {
         this.formNote = this.formBuilder.group({
             ocurrenceDate: [null],
             value: [null],
-            description: [null],
-            isActive: [false]
+            description: [null]
         });
 
         this.actRoute.params.subscribe((params) => {
@@ -80,12 +82,22 @@ export class SchoolDetailComponent implements OnInit {
             this.schoolService.createSchool(school)
             .subscribe(res => {
                 console.log(res);
+                if(res){
+                    this.notify('Escola criada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                }else{
+                    this.notify('Houve um erro ao salvar as informações da escola.', LIFETIMENOTIFY, STRDANGER);
+                }
             });
         }else if( option === 'update'){
             school.SCHOOL_ID = Number(this.schoolId);
             this.schoolService.updateSchool(school)
             .subscribe(res => {
                 console.log(res);
+                if(res){
+                    this.notify('Escola atualizada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                }else{
+                    this.notify('Houve um erro ao atualizar as informações da escola.', LIFETIMENOTIFY, STRDANGER);
+                }
             });
         }
     }
@@ -143,13 +155,24 @@ export class SchoolDetailComponent implements OnInit {
     }
 
     saveNotes(){
-        console.log(this.noteList);
         this.noteService.createManyNotes(this.noteList)
         .subscribe(res => {
             console.log(res);
+            if(res){
+                this.notify('Notas salvas com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+            }else{
+                this.notify('Houve um erro ao salvar as notas.', LIFETIMENOTIFY, STRDANGER);
+            }
         });
         this.noteList = [];
         this.formNote.reset();
     }
 
+    notify(msg: string, tempoVida: number, color: string){
+        this.alertServ.newAlert(msg, tempoVida, color);
+    }
+
+    removeNotify(){
+        this.alertServ.removeAllAlerts();
+    }
 }

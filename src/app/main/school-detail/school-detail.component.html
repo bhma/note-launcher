@@ -1,6 +1,6 @@
-<section class="container-fluid">
-    <div class="row vh-80">
-        <div class="col">
+<section class="container-fluid pl-5">
+    <div class="row vh-80 pl-5">
+        <div class="col-sm-5">
             <div class="mb-3">
                 <h1 *ngIf="schoolId === 'newSchool'" class="display-4">Nova Escola</h1>
                 <h1 *ngIf="schoolId !== 'newSchool'" class="display-4">Escola #{{ schoolId }}</h1>
@@ -43,7 +43,7 @@
                 </div>
             </form>
         </div>
-        <div class="col">
+        <div class="col-sm-6">
             <div *ngIf="schoolId !== 'newSchool'" >
                 <div class="row">
                     <h2 class="col-sm font-weight-light">Adicionar notas</h2>
@@ -64,14 +64,6 @@
                     <textarea formControlName="description" id="inputDesc" placeholder="Digite uma descrição..."
                         maxlength="150" rows="1" class="form-control mb-2 mr-sm-2 form-control-sm"></textarea>
 
-                    <div class="form-check mb-2 mr-sm-2">
-                        <input formControlName="isActive" type="checkbox" id="inputIsActive"
-                            class="form-control mr-sm-2 form-control-sm">
-                        <label class="form-check-label" for="inputIsActive">
-                            Ativa
-                        </label>
-                    </div>
-
                     <button class="btn btn-primary border-rounded mb-2" (click)="addNoteList()"><strong>&#43;</strong></button>
                 </form>
 
@@ -84,7 +76,6 @@
                         <div class="car-body row align-items-center py-1">
                             <div class="col-sm-4 column-data pl-5"> {{ note.OCCURRENCE_DATE | date: 'dd/MM/yyyy'  }} </div>
                             <div class="col-sm-3 column-data "> {{ note.VALUE | currency: 'BRL'  }} </div>
-                            <!-- <div class="col-sm-2 column-data"> {{ getSchoolName() }} </div> -->
                             <div class="col-sm-4 column-data text-truncate"> {{ note.DESCRIPTION }} </div>
                             <div class="col-sm-1 column-data">
                                 <button class="btn btn-sm btn-danger border-rounded ml-5" (click)="rmNoteList(note)">
@@ -104,5 +95,4 @@
 
         </div>
     </div>
-
 </section>

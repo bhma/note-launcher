@@ -21,7 +21,7 @@ registerLocaleData(ptBr)
     SharedModule,
     MainModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
       {

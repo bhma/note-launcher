@@ -1,1 +1,10 @@
-<p>alert works!</p>
+<div>
+    <div *ngFor="let alert of alertList" class="notify" [ngClass]="getBg(alert.color)">
+        <div>
+            {{ alert.mensagem }}
+        </div>
+        <div (click)="remover(alert)" >
+            <span class="font-weight-bold">x</span>
+        </div>
+    </div>
+</div>

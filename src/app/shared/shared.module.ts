@@ -19,7 +19,8 @@ import { AlertComponent } from './alert/alert.component';
   ],
   exports:[
       MenuBarComponent,
-      FooterComponent
+      FooterComponent,
+      AlertComponent
   ]
 })
 export class SharedModule { }

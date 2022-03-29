@@ -1,0 +1,35 @@
+:host{
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    top: 8vh;
+    width: 300px;
+}
+
+.notify{
+    background: #efefef;
+    border-radius: 8px;
+    color: #333;
+    display: flex;
+    margin: 8px;
+    padding: 24px;
+}
+
+.notify > div:nth-child(1){
+    flex-grow: 1;
+}
+
+.notify > div:nth-child(2){
+    cursor: pointer;
+}
+
+.bg-green{
+    background-color: #81c784;
+}
+.bg-red{
+    background-color: #ff5131;
+}
+.bg-yellow{
+    background-color: #ffb74d;
+}
+

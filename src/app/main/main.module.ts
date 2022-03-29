@@ -11,6 +11,7 @@ import { SchoolDetailComponent } from './school-detail/school-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoteListMonthComponent } from './note-list-month/note-list-month.component';
+import { SharedModule } from '../shared/shared.module';
 
 export const customCurrencyMaskConfig = {
     align: "left",
@@ -40,7 +41,8 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     PaginationModule.forRoot(),
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    SharedModule
   ],
   exports:[
       NoteListComponent,
