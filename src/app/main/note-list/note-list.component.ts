@@ -36,15 +36,16 @@ export class NoteListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.schoolService.getSchools()
+        .subscribe(schools => {
+            this.schoolList = schools;
+        });
         this.activeRoute.queryParams.subscribe((queryParams) => {
             this.isMonth = queryParams.isMonth;
             this.monthString = queryParams.monthString;
         });
 
-        this.schoolService.getSchools()
-        .subscribe(schools => {
-            this.schoolList = schools;
-        });
+
 
         if (this.isMonth) {
             // chamar o end-point getNotesByMonth

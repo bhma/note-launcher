@@ -1,12 +1,13 @@
 import { NoteService } from './../../service/note.service';
 import { INote } from './../../model/note.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SchoolService } from 'src/app/service/school.service';
 import { ISchool } from 'src/app/model/school.model';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { AlertService, LIFETIMENOTIFY, STRDANGER, STRSUCCESS } from 'src/app/service/alert.service';
+import { AlertService, LIFETIMENOTIFY, STRDANGER, STRSUCCESS, AlertConfig } from 'src/app/service/alert.service';
+import { AlertComponent } from 'ngx-bootstrap/alert';
 
 @Component({
     selector: 'app-school-detail',
@@ -15,6 +16,7 @@ import { AlertService, LIFETIMENOTIFY, STRDANGER, STRSUCCESS } from 'src/app/ser
 })
 export class SchoolDetailComponent implements OnInit {
 
+    alertArray: any[];
 
     PAGELENGTH: number = 8;
     MAXSIZE: number = 5;
@@ -34,6 +36,7 @@ export class SchoolDetailComponent implements OnInit {
         private noteService: NoteService,
         private formBuilder: FormBuilder,
         private actRoute: ActivatedRoute,
+        private route: Router,
         private alertServ: AlertService
     ) { }
 
@@ -48,7 +51,8 @@ export class SchoolDetailComponent implements OnInit {
         this.formNote = this.formBuilder.group({
             ocurrenceDate: [null],
             value: [null],
-            description: [null]
+            description: [null],
+            isActive: [null]
         });
 
         this.actRoute.params.subscribe((params) => {
@@ -78,46 +82,47 @@ export class SchoolDetailComponent implements OnInit {
             IS_ACTIVE: this.formSchool.get('isActive').value
         }
 
-        if(option === 'create'){
+        if (option === 'create') {
             this.schoolService.createSchool(school)
-            .subscribe(res => {
-                console.log(res);
-                if(res){
-                    this.notify('Escola criada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
-                }else{
-                    this.notify('Houve um erro ao salvar as informações da escola.', LIFETIMENOTIFY, STRDANGER);
-                }
-            });
-        }else if( option === 'update'){
+                .subscribe(res => {
+                    console.log(res);
+                    if (res) {
+                        this.notify('Escola criada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                        this.route.navigate(['schools']);
+                    } else {
+                        this.notify('Houve um erro ao salvar as informações da escola.', LIFETIMENOTIFY, STRDANGER);
+                    }
+                });
+        } else if (option === 'update') {
             school.SCHOOL_ID = Number(this.schoolId);
             this.schoolService.updateSchool(school)
-            .subscribe(res => {
-                console.log(res);
-                if(res){
-                    this.notify('Escola atualizada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
-                }else{
-                    this.notify('Houve um erro ao atualizar as informações da escola.', LIFETIMENOTIFY, STRDANGER);
-                }
-            });
+                .subscribe(res => {
+                    console.log(res);
+                    if (res) {
+                        this.notify('Escola atualizada com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                    } else {
+                        this.notify('Houve um erro ao atualizar as informações da escola.', LIFETIMENOTIFY, STRDANGER);
+                    }
+                });
         }
     }
 
-    addNoteList(){
+    addNoteList() {
         this.noteList.push({
-            NOTE_ID : 0,
-            OCCURRENCE_DATE : this.formNote.get('ocurrenceDate').value,
-            OCCURRENCE_MONTH : String(this.formNote.get('ocurrenceDate').value).substr(0,7),
-            VALUE : Number(this.formNote.get('value').value),
-            SCHOOL_ID : Number(this.schoolId),
-            DESCRIPTION : this.formNote.get('description').value,
-            IS_ACTIVE : this.formNote.get('isActive').value
+            NOTE_ID: 0,
+            OCCURRENCE_DATE: this.formNote.get('ocurrenceDate').value,
+            OCCURRENCE_MONTH: String(this.formNote.get('ocurrenceDate').value).substr(0, 7),
+            VALUE: Number(this.formNote.get('value').value),
+            SCHOOL_ID: Number(this.schoolId),
+            DESCRIPTION: this.formNote.get('description').value,
+            IS_ACTIVE: this.formNote.get('isActive').value
         });
-        if(this.noteList.length <= this.PAGELENGTH){
+        if (this.noteList.length <= this.PAGELENGTH) {
             this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
-        }else{
+        } else {
 
             let ceilValidation = Math.ceil(this.noteList.length / this.PAGELENGTH);
-            if(ceilValidation > this.page){
+            if (ceilValidation > this.page) {
                 this.page = ceilValidation;
                 this.currentPage = this.page;
                 this.startIndex = this.noteList.length;
@@ -127,52 +132,54 @@ export class SchoolDetailComponent implements OnInit {
         }
     }
 
-    rmNoteList(note: INote){
+    rmNoteList(note: INote) {
         let position = this.noteList.indexOf(note);
         this.noteList.splice(position, 1);
     }
 
-    getSchoolName(){
+    getSchoolName() {
         return this.formSchool.get('schoolName').value;
     }
 
-    showNoteList(){
+    showNoteList() {
         return this.noteList.length === 0 ? true : false;
     }
 
-    showPaginationNoteList(){
+    showPaginationNoteList() {
         return this.noteList.length > this.PAGELENGTH;
     }
 
-    getNoteListLength(){
+    getNoteListLength() {
         return this.noteList.length;
     }
 
-    pageChanged(event: PageChangedEvent){
+    pageChanged(event: PageChangedEvent) {
         const startItem = (event.page - 1) * event.itemsPerPage;
         const endItem = event.page * event.itemsPerPage;
         this.returnedNoteList = this.noteList.slice(startItem, endItem);
     }
 
-    saveNotes(){
+    saveNotes() {
         this.noteService.createManyNotes(this.noteList)
-        .subscribe(res => {
-            console.log(res);
-            if(res){
-                this.notify('Notas salvas com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
-            }else{
-                this.notify('Houve um erro ao salvar as notas.', LIFETIMENOTIFY, STRDANGER);
-            }
-        });
+            .subscribe(res => {
+                console.log(res);
+                if (res) {
+                    this.notify('Notas salvas com sucesso!', LIFETIMENOTIFY, STRSUCCESS);
+                } else {
+                    this.notify('Houve um erro ao salvar as notas.', LIFETIMENOTIFY, STRDANGER);
+                }
+            });
         this.noteList = [];
         this.formNote.reset();
     }
 
-    notify(msg: string, tempoVida: number, color: string){
+    notify(msg: string, tempoVida: number, color: string) {
         this.alertServ.newAlert(msg, tempoVida, color);
     }
 
-    removeNotify(){
+    removeNotify() {
         this.alertServ.removeAllAlerts();
     }
+
+
 }

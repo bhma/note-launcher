@@ -21,8 +21,10 @@ export class NoteListMonthComponent implements OnInit {
     schoolList: ISchool[];
     isMonth: boolean = false;
     monthString: string = '';
-    sumValues: number;
-    sumValuesSchool: number = 0;
+    monthExpenses: number = 0;
+    schoolExpenses: number = 0;
+    monthBalance: number = 0;
+
 
     constructor(
         private activeRoute: ActivatedRoute,
@@ -44,7 +46,7 @@ export class NoteListMonthComponent implements OnInit {
         .subscribe(monthDetail => {
             this.noteList = monthDetail.notes;
             this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
-            this.sumValues = Number(monthDetail.sumValues.SumValues);
+            this.monthExpenses = Number(monthDetail.sumValues.SumValues);
         });
     }
 
@@ -83,11 +85,15 @@ export class NoteListMonthComponent implements OnInit {
             this.noteList = noteList.notes;
             this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
             if(schoolId === 0){
-                this.sumValuesSchool = 0;
+                this.schoolExpenses = 0;
             }else{
-                this.sumValuesSchool = Number(noteList.sumValues.SumValues);
+                this.schoolExpenses = Number(noteList.sumValues.SumValues);
             }
         })
+    }
+
+    setClassMonthBalance(): string{
+        return this.monthBalance < 0 ? 'text-danger' : '';
     }
 
 }

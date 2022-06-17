@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 registerLocaleData(ptBr)
 

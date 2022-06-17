@@ -7,6 +7,7 @@ import { AlertComponent } from './alert/alert.component';
 
 
 
+
 @NgModule({
   declarations: [
     MenuBarComponent,
@@ -15,7 +16,7 @@ import { AlertComponent } from './alert/alert.component';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   exports:[
       MenuBarComponent,

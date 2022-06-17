@@ -7,6 +7,14 @@ export const STRDANGER: string = 'danger';
 export const STRINFO: string = 'info';
 export const LIFETIMENOTIFY: number = 100;
 
+export interface AlertConfig {
+    msg: string,
+    type: string;
+    dismissible: boolean;
+    dismissOnTimeout: number;
+    isOpen: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })

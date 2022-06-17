@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { stringify } from 'querystring';
 import { AlertService } from 'src/app/service/alert.service';
 
 export type AlertaAcao = {
@@ -12,6 +11,8 @@ export type Alerta = {
     color?: string,
     tempoDeVidaSeg?: number
 }
+
+
 
 @Component({
     selector: 'app-alert',
@@ -26,30 +27,30 @@ export class AlertComponent {
         private alertService: AlertService
     ) {
         this.alertService.getAlerts()
-        .subscribe((alertaAcao: AlertaAcao) => {
-            switch(alertaAcao.acao){
-                case 'novo':
-                    this.alertList.push(alertaAcao.alerta);
-                    break;
-                case 'remover':
-                    this.alertList = this.alertList.filter(alert => {
-                        return alert !== alertaAcao.alerta;
-                    });
-                    break;
-                default:
-                    this.alertList = [];
-                    break;
-            }
-        });
+            .subscribe((alertaAcao: AlertaAcao) => {
+                switch (alertaAcao.acao) {
+                    case 'novo':
+                        this.alertList.push(alertaAcao.alerta);
+                        break;
+                    case 'remover':
+                        this.alertList = this.alertList.filter(alert => {
+                            return alert !== alertaAcao.alerta;
+                        });
+                        break;
+                    default:
+                        this.alertList = [];
+                        break;
+                }
+            });
     }
 
-    remover(alert: Alerta){
+    remover(alert: Alerta) {
         this.alertService.removeAlert(alert);
     }
 
-    getBg(color: string){
+    getBg(color: string) {
         let classBg: string;
-        switch (color){
+        switch (color) {
             case 'success':
                 classBg = 'bg-green';
                 break;

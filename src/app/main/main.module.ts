@@ -12,6 +12,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoteListMonthComponent } from './note-list-month/note-list-month.component';
 import { SharedModule } from '../shared/shared.module';
+import { BalanceListComponent } from './balance-list/balance-list.component';
+
 
 export const customCurrencyMaskConfig = {
     align: "left",
@@ -33,7 +35,8 @@ export const customCurrencyMaskConfig = {
     MonthListComponent,
     NoteDetailComponent,
     SchoolDetailComponent,
-    NoteListMonthComponent
+    NoteListMonthComponent,
+    BalanceListComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +52,8 @@ export const customCurrencyMaskConfig = {
       SchoolListComponent,
       MonthListComponent,
       NoteDetailComponent,
-      SchoolDetailComponent
+      SchoolDetailComponent,
+      BalanceListComponent
   ]
 })
 export class MainModule { }

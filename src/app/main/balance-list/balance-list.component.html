@@ -1,0 +1,32 @@
+<section class="container">
+    <div class="d-flex justify-content-between mb-3">
+        <div>
+            <h1 class="display-4">Lista de Entradas</h1>
+        </div>
+        <div class="">
+            <button [routerLink]="['/schoolDetail', 'newSchool']" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar entrada </button>
+        </div>
+    </div>
+    <div class="row px-3 mb-2">
+        <div class="col">
+            <span class="column-title">Escola</span>
+        </div>
+        <div class="col">
+            <span class="column-title">Valor</span>
+        </div>
+        <div class="col">
+            <span class="column-title">Data</span>
+        </div>
+    </div>
+    <a *ngFor="let balance of pagedBalanceList" [routerLink]="['/schoolDetail', balance.BALANCE_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+        <div class="card-body row">
+            <div class="col column-data">{{ getSchoolName(balance.SCHOOL_ID) }}</div>
+            <div class="col column-data">{{ balance.VALUE }}</div>
+            <div class="col column-data text-truncate">{{ balance.CREATED_ON }}</div>
+        </div>
+    </a>
+
+    <div class="d-flex justify-content-center">
+        <pagination [totalItems]="balanceList.length" [itemsPerPage]="PAGELENGTH" [rotate]="true" [maxSize]="MAXSIZE" (pageChanged)="pageChanged($event)" ></pagination>
+    </div>
+</section>
