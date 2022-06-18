@@ -4,7 +4,7 @@
             <h1 class="display-4">Lista de Entradas</h1>
         </div>
         <div class="">
-            <button [routerLink]="['/schoolDetail', 'newSchool']" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar entrada </button>
+            <button (click)="openModal()" class="btn btn-primary mt-4 border-rounded"> <strong>&#43;</strong> Adicionar entrada </button>
         </div>
     </div>
     <div class="row px-3 mb-2">
@@ -18,11 +18,11 @@
             <span class="column-title">Data</span>
         </div>
     </div>
-    <a *ngFor="let balance of pagedBalanceList" [routerLink]="['/schoolDetail', balance.BALANCE_ID]" class="card bg-light border-rounded text-decoration-none text-dark shadow-sm mb-3">
+    <a *ngFor="let balance of pagedBalanceList" class="card bg-light border-rounded text-decoration-none text-dark click-pointer shadow-sm mb-3" (click)="editBalance(balance)">
         <div class="card-body row">
             <div class="col column-data">{{ getSchoolName(balance.SCHOOL_ID) }}</div>
-            <div class="col column-data">{{ balance.VALUE }}</div>
-            <div class="col column-data text-truncate">{{ balance.CREATED_ON }}</div>
+            <div class="col column-data">{{ balance.VALUE | currency: 'BRL' }}</div>
+            <div class="col column-data text-truncate">{{ balance.CREATED_ON | date: 'dd/MM/yyyy' }}</div>
         </div>
     </a>
 

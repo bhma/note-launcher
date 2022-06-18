@@ -4,6 +4,8 @@ import { ISchool } from './../../model/school.model';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { IBalance } from './../../model/balance.model';
 import { Component, OnInit } from '@angular/core';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { BalanceDetailComponent } from '../balance-detail/balance-detail.component';
 
 @Component({
     selector: 'app-balance-list',
@@ -18,22 +20,16 @@ export class BalanceListComponent implements OnInit {
     pagedBalanceList: IBalance[] = [];
     schoolList: ISchool[] = [];
 
+    bsModalRef: BsModalRef;
+
     constructor(
         private balanceServ: BalanceService,
-        private schoolServ: SchoolService
+        private schoolServ: SchoolService,
+        private modalServ: BsModalService
     ) { }
 
     ngOnInit(): void {
-        this.schoolServ.getSchools()
-        .subscribe(schools => {
-            this.schoolList = schools;
-        });
-        this.balanceServ.getAll()
-        .subscribe(balances => {
-            this.balanceList = balances;
-            this.pagedBalanceList = this.balanceList.slice(0, this.PAGELENGTH);
-        });
-
+        this.loadData(true);
     }
 
     pageChanged(event: PageChangedEvent){
@@ -45,6 +41,50 @@ export class BalanceListComponent implements OnInit {
     getSchoolName(schoolId: number): string {
         return this.schoolList
             .find(school => school.SCHOOL_ID === schoolId).SCHOOL_NAME;
+    }
+
+    openModal(){
+        this.bsModalRef = this.modalServ.show(BalanceDetailComponent, {
+            initialState: {
+                schoolList: this.schoolList,
+                isEdited: false
+            }
+        });
+        const subscription = this.bsModalRef.onHide
+        .subscribe(res => {
+            this.loadData(false);
+            subscription.unsubscribe();
+        });
+
+    }
+
+    editBalance(balance: IBalance){
+        this.bsModalRef = this.modalServ.show(BalanceDetailComponent, {
+            initialState: {
+                balance: balance,
+                schoolList: this.schoolList,
+                isEdited: false
+            }
+        });
+        const subscription = this.bsModalRef.onHide
+        .subscribe(res => {
+            this.loadData(false);
+            subscription.unsubscribe();
+        });
+    }
+
+    loadData(loadSchoolList: boolean){
+        if(loadSchoolList){
+            this.schoolServ.getSchools()
+            .subscribe(schools => {
+                this.schoolList = schools;
+            });
+        }
+        this.balanceServ.getAll()
+        .subscribe(balances => {
+            this.balanceList = balances;
+            this.pagedBalanceList = this.balanceList.slice(0, this.PAGELENGTH);
+        });
     }
 
 }

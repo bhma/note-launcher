@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoteListMonthComponent } from './note-list-month/note-list-month.component';
 import { SharedModule } from '../shared/shared.module';
 import { BalanceListComponent } from './balance-list/balance-list.component';
+import { BalanceDetailComponent } from './balance-detail/balance-detail.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 export const customCurrencyMaskConfig = {
@@ -36,13 +38,15 @@ export const customCurrencyMaskConfig = {
     NoteDetailComponent,
     SchoolDetailComponent,
     NoteListMonthComponent,
-    BalanceListComponent
+    BalanceListComponent,
+    BalanceDetailComponent
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     PaginationModule.forRoot(),
+    ModalModule.forRoot(),
     ReactiveFormsModule,
     NgxPaginationModule,
     SharedModule

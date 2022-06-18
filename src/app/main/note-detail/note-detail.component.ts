@@ -31,7 +31,7 @@ export class NoteDetailComponent implements OnInit {
         this.formNote = this.formBuilder.group({
             ocurrenceDate: [null],
             value: [null],
-            schoolId: [null],
+            schoolId: [0],
             description: [null],
             isActive: [false]
         });

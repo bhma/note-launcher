@@ -27,9 +27,9 @@ export class NoteListComponent implements OnInit {
 
 
     constructor(
+        private schoolService: SchoolService,
         private activeRoute: ActivatedRoute,
         private noteService: NoteService,
-        private schoolService: SchoolService,
         private monthService: MonthService
     ) {
 
