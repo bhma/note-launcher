@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 import { BalanceListComponent } from './main/balance-list/balance-list.component';
 import { MonthListComponent } from './main/month-list/month-list.component';
 import { NoteDetailComponent } from './main/note-detail/note-detail.component';
@@ -11,16 +12,16 @@ import { LoginComponent } from './shared/login/login.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: NoteListComponent },
-    { path: 'noteListMonth', component: NoteListMonthComponent },
-    { path: 'months', component: MonthListComponent },
-    { path: 'schools', component: SchoolListComponent },
-    { path: 'balance', component: BalanceListComponent },
-    { path: 'noteDetail/:id', component: NoteDetailComponent },
-    { path: 'schoolDetail/:id', component: SchoolDetailComponent },
+    { path: 'home', component: NoteListComponent, canActivate: [AuthGuard] },
+    { path: 'noteListMonth', component: NoteListMonthComponent, canActivate: [AuthGuard] },
+    { path: 'months', component: MonthListComponent, canActivate: [AuthGuard] },
+    { path: 'schools', component: SchoolListComponent, canActivate: [AuthGuard] },
+    { path: 'balance', component: BalanceListComponent, canActivate: [AuthGuard] },
+    { path: 'noteDetail/:id', component: NoteDetailComponent, canActivate: [AuthGuard] },
+    { path: 'schoolDetail/:id', component: SchoolDetailComponent, canActivate: [AuthGuard] },
 
     { path: '', pathMatch: 'full', redirectTo: 'login' },
-    { path: '*', pathMatch: 'full', redirectTo: 'home' }
+    { path: '*', pathMatch: 'full', redirectTo: 'login' }
 ];
 
 @NgModule({
