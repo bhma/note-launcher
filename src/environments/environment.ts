@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
 //    API_URL: 'https://api-note-launcher.herokuapp.com/api'
-   API_URL: '/api'
+   API_URL: '/api',
+   TOKEN_NAME: 'note-launcher-token'
 };
 
 /*

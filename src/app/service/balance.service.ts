@@ -25,6 +25,11 @@ export class BalanceService {
         .pipe(take(1));
     }
 
+    getTotalByMonth(month: string){
+        return this.http.get<any>(`${this.API}/getTotalByMonth/${month}`)
+        .pipe(take(1));
+    }
+
     create(balance: IBalance){
         return this.http.post<IBalance>(`${this.API}/createBalance`, balance)
         .pipe(take(1));

@@ -33,7 +33,7 @@ export class BalanceDetailComponent implements OnInit {
         });
     }
 
-    save(){
+    save(isDelete: boolean){
         if(this.balance){
             this.balance = {
                 BALANCE_ID: this.balance.BALANCE_ID,
@@ -41,7 +41,7 @@ export class BalanceDetailComponent implements OnInit {
                 OCCURRENCE_MONTH: String(this.formBalance.get('ocurrenceDate').value).substr(0,7),
                 SCHOOL_ID: this.formBalance.get('schoolId').value,
                 VALUE: this.formBalance.get('value').value,
-                IS_ACTIVE: true
+                IS_ACTIVE: !isDelete
             }
             this.balanceServ.update(this.balance)
             .subscribe(res => {

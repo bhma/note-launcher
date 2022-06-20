@@ -1,3 +1,4 @@
+import { BalanceService } from 'src/app/service/balance.service';
 import { Component, OnInit } from '@angular/core';
 import { ISchool } from 'src/app/model/school.model';
 import { INote } from 'src/app/model/note.model';
@@ -23,20 +24,21 @@ export class NoteListMonthComponent implements OnInit {
     monthString: string = '';
     monthExpenses: number = 0;
     schoolExpenses: number = 0;
-    monthBalance: number = 0;
+    totalBalance: number = 0;
+    partialBalance: number = 0;
 
 
     constructor(
         private activeRoute: ActivatedRoute,
         private noteService: NoteService,
         private schoolService: SchoolService,
+        private balanceService: BalanceService
     ) { }
 
     ngOnInit(): void {
         this.activeRoute.queryParams.subscribe((queryParams) => {
             this.monthString = queryParams.monthString;
         });
-
         this.schoolService.getSchools()
         .subscribe(schools => {
             this.schoolList = schools;
@@ -47,7 +49,13 @@ export class NoteListMonthComponent implements OnInit {
             this.noteList = monthDetail.notes;
             this.returnedNoteList = this.noteList.slice(0, this.PAGELENGTH);
             this.monthExpenses = Number(monthDetail.sumValues.SumValues);
+            this.balanceService.getTotalByMonth(this.monthString)
+            .subscribe(res => {
+                this.totalBalance = res.TotalBalance !== null ? res.TotalBalance : 0;
+                this.partialBalance = this.totalBalance - this.monthExpenses;
         });
+        });
+
     }
 
     getSchoolName(schoolId: number) {
@@ -93,7 +101,7 @@ export class NoteListMonthComponent implements OnInit {
     }
 
     setClassMonthBalance(): string{
-        return this.monthBalance < 0 ? 'text-danger' : '';
+        return this.partialBalance < 0 ? 'text-danger' : '';
     }
 
 }

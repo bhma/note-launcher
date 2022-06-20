@@ -7,8 +7,10 @@ import { NoteListMonthComponent } from './main/note-list-month/note-list-month.c
 import { NoteListComponent } from './main/note-list/note-list.component';
 import { SchoolDetailComponent } from './main/school-detail/school-detail.component';
 import { SchoolListComponent } from './main/school-list/school-list.component';
+import { LoginComponent } from './shared/login/login.component';
 
 const routes: Routes = [
+    { path: 'login', component: LoginComponent },
     { path: 'home', component: NoteListComponent },
     { path: 'noteListMonth', component: NoteListMonthComponent },
     { path: 'months', component: MonthListComponent },
@@ -17,7 +19,7 @@ const routes: Routes = [
     { path: 'noteDetail/:id', component: NoteDetailComponent },
     { path: 'schoolDetail/:id', component: SchoolDetailComponent },
 
-    { path: '', pathMatch: 'full', redirectTo: 'home' },
+    { path: '', pathMatch: 'full', redirectTo: 'login' },
     { path: '*', pathMatch: 'full', redirectTo: 'home' }
 ];
 

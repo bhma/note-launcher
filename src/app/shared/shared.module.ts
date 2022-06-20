@@ -4,6 +4,8 @@ import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { FooterComponent } from './footer/footer.component';
 import { AlertComponent } from './alert/alert.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -12,16 +14,19 @@ import { AlertComponent } from './alert/alert.component';
   declarations: [
     MenuBarComponent,
     FooterComponent,
-    AlertComponent
+    AlertComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
+    ReactiveFormsModule
   ],
   exports:[
       MenuBarComponent,
       FooterComponent,
-      AlertComponent
+      AlertComponent,
+      LoginComponent
   ]
 })
 export class SharedModule { }
