@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
 import { IMonth } from '../model/month.model';
+import { setHeader } from './ConfigHeader';
 
 
 @Injectable({
@@ -15,7 +16,9 @@ export class MonthService {
     ) { }
 
     getMonths(){
-        return this.http.get<IMonth[]>(`${this.API}/months`)
+        return this.http.get<IMonth[]>(`${this.API}/months`, {
+            headers: setHeader()
+        })
         .pipe(take(1));
     }
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { take } from 'rxjs/operators';
 import { INote } from '../model/note.model';
+import { setHeader } from './ConfigHeader';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,9 @@ export class NoteService {
     ) { }
 
     getNotes(){
-        return this.http.get<INote[]>(`${this.API}/notes`)
+        return this.http.get<INote[]>(`${this.API}/notes`, {
+            headers: setHeader()
+        })
         .pipe(take(1));
     }
 
@@ -23,40 +26,57 @@ export class NoteService {
     }
 
     getNoteByID(noteId: string){
-        return this.http.get<INote>(`${this.API}/note/${noteId}`)
+        return this.http.get<INote>(`${this.API}/note/${noteId}`, {
+            headers: setHeader()
+        })
         .pipe(take(1));
     }
 
     getNoteByMonth(month: string, schoolId?: number){
         if(schoolId){
-            return this.http.get<any>(`${this.API}/notes/${month}/${schoolId}`)
+            return this.http.get<any>(`${this.API}/notes/${month}/${schoolId}`, {
+                headers: setHeader()
+            })
             .pipe(take(1));
         }else{
-            return this.http.get<any>(`${this.API}/notes/${month}`)
+            return this.http.get<any>(`${this.API}/notes/${month}`, {
+                headers: setHeader()
+            })
             .pipe(take(1));
         }
     }
 
     createNote(note: INote){
-        return this.http.post<INote>(`${this.API}/createNote`, note)
+        return this.http.post<INote>(`${this.API}/createNote`, note, {
+            headers: setHeader()
+        })
         .pipe(take(1));
     }
 
     createManyNotes(notes: INote[]){
-        return this.http.post<INote>(`${this.API}/createManyNotes`, notes)
+        return this.http.post<INote>(`${this.API}/createManyNotes`, notes, {
+            headers: setHeader()
+        })
         .pipe(take(1));
     }
 
     updateNote(note: INote){
-        return this.http.put<INote>(`${this.API}/updateNote`, note)
+        return this.http.put<INote>(`${this.API}/updateNote`, note, {
+            headers: setHeader()
+        })
         .pipe(take(1));
     }
 
-    exportNotesToExcel(notes?: INote[]){
-        return this.http.get(`${this.API}/exportExcel`,
-        {
+    exportNotesToExcel(noteList: INote[], total: number){
+        return this.http.post(`${this.API}/exportExcel`, {
+            noteList,
+            total
+        }, {
+            headers: setHeader(),
             responseType: 'blob' as 'json'
         })
         .pipe(take(1));
     }
+
+
 }

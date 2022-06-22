@@ -64,7 +64,7 @@ export class NoteListMonthComponent implements OnInit {
     }
 
     exportToExcel(){
-        this.noteService.exportNotesToExcel()
+        this.noteService.exportNotesToExcel(this.noteList, this.monthExpenses)
         .subscribe((res: Blob) => {
             const file = new Blob([res], {
                 type: res.type
