@@ -1,3 +1,5 @@
+import { IBalance } from './../model/balance.model';
+import { ISchool } from './../model/school.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -67,10 +69,12 @@ export class NoteService {
         .pipe(take(1));
     }
 
-    exportNotesToExcel(noteList: INote[], total: number){
+    exportNotesToExcel(noteList: INote[], total: number, schList: ISchool[], balances: IBalance[]){
         return this.http.post(`${this.API}/exportExcel`, {
             noteList,
-            total
+            total,
+            schList,
+            balances
         }, {
             headers: setHeader(),
             responseType: 'blob' as 'json'

@@ -1,3 +1,4 @@
+import { IBalance } from './../../model/balance.model';
 import { BalanceService } from 'src/app/service/balance.service';
 import { Component, OnInit } from '@angular/core';
 import { ISchool } from 'src/app/model/school.model';
@@ -20,6 +21,7 @@ export class NoteListMonthComponent implements OnInit {
     noteList: Array<INote> = new Array<INote>();
     returnedNoteList: Array<INote> = new Array<INote>();
     schoolList: ISchool[];
+    balanceList: IBalance[];
     isMonth: boolean = false;
     monthString: string = '';
     monthExpenses: number = 0;
@@ -53,7 +55,11 @@ export class NoteListMonthComponent implements OnInit {
             .subscribe(res => {
                 this.totalBalance = res.TotalBalance !== null ? res.TotalBalance : 0;
                 this.partialBalance = this.totalBalance - this.monthExpenses;
-        });
+            });
+            this.balanceService.getAll()
+            .subscribe((res: IBalance[]) => {
+                this.balanceList = res.filter(bal => bal.OCCURRENCE_MONTH === this.monthString);
+            });
         });
 
     }
@@ -64,7 +70,7 @@ export class NoteListMonthComponent implements OnInit {
     }
 
     exportToExcel(){
-        this.noteService.exportNotesToExcel(this.noteList, this.monthExpenses)
+        this.noteService.exportNotesToExcel(this.noteList, this.monthExpenses, this.schoolList, this.balanceList)
         .subscribe((res: Blob) => {
             const file = new Blob([res], {
                 type: res.type
